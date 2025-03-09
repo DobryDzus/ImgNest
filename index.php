@@ -23,12 +23,11 @@
 <!-- Modal -->
 <div id="loginModal" class="modal">
     <div class="modal-content form-container">
-        
+        <span class="close">&times;</span>
         <h2>Login</h2>
         <form action="" method="post">
-        <span class="close">&times;</span>
             <input type="text" name="username" id="username" class="form-input" placeholder="username" required>
-            <input type="password" name="password" id="password" class="form-input" placeholder="password" required>
+            <input type="password" name="pwd" id="pwd" class="form-input" placeholder="password" required>
             <input type="submit" value="Login" class="form-button">
             <a href="register.php" class="create-account">Create your Account <i class="fa-solid fa-arrow-right"></i></a>
         </form>
