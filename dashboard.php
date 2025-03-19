@@ -7,6 +7,16 @@
     <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
-    
+    <div class="srch-fltr-ordr">
+        <div class="search-bar">
+            search
+        </div>
+        <div class="filter-bar">
+            filter
+        </div>
+        <div class="order-bar">
+            order
+        </div>
+    </div>
 </body>
 </html>

@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&family=Lexend:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-
+/*global*/
 html{
     scroll-behavior: smooth;
 }
@@ -203,6 +203,8 @@ header {
     text-decoration: none;
 }
 
+/*register*/
+
 .register-form{
     position: fixed;
     z-index: 1000;
@@ -212,4 +214,51 @@ header {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     overflow: auto;
+}
+
+
+/*dashboard*/
+
+.srch-fltr-ordr{
+    background-color: #b3b3b3;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2rem 20rem;
+    padding: 0.5rem 2rem;
+    border-radius: 3rem;
+}
+
+.search-bar{
+    background-color: #8c8c8c;
+    width: 40%;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    height: 1.5rem;
+}
+
+.filter-bar{
+    background-color: #8c8c8c;
+    display: flex;
+    gap: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    width: 30%;
+    height: 1.5rem;
+}
+
+.order-bar{
+    background-color: #8c8c8c;
+    display: flex;
+    gap: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    width: 10%;
+    height: 1.5rem;
 }
