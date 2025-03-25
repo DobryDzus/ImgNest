@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
     $sql = "INSERT INTO users (username, pwd, email) VALUES ('$username', '$pwd', '$email');";
 
     if (mysqli_query($conn, $sql)){
-        echo "zaznam pridan";
+        header("Location: ../confirmation.php");
     } else {
         echo "Chyba: " . $sql . "<br>" . mysqli_error($conn);
     }

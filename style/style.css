@@ -318,3 +318,25 @@ header {
     border-color: #888;
     color: #555;
 }
+
+/*successful register*/
+
+.confirmation-message{
+    background-color: #6502d6;
+    padding: 5em;
+    border-radius: 10px;
+    max-width: 400px;
+    margin: 50px auto;
+    text-align: center;
+    color: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.confirmation-message h2{
+    font-size: 24px;
+    margin-bottom: 1rem;
+}
+
+.confirmation-message p{
+    font-size: 16px;
+}
