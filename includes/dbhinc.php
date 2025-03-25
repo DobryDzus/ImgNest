@@ -1,11 +1,11 @@
 <?php
 $server = "localhost";
-$user = "root";
+$db_username = "root";
 $password = "";
 $db = "db";
 
 
-$conn = mysqli_connect($server, $user, $password, $db);
+$conn = mysqli_connect($server, $db_username, $password, $db);
 
 if (!$conn) {
     die("nefunguje pripojeni: " . mysqli_connect_error());
