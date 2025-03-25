@@ -21,19 +21,34 @@
         </div>
     </div>
     <div class="container">
-        <div class="upload-area" onclick="document.getElementById('fileInput').click();">
+        <button class="upload-area" id="openModal">
             click here for upload
-        </div>
-        <form id="uploadForm" enctype="multipart/form-data" method="post" action="upload.php" style="display: none;" accept="image/*">
-            <input type="file" id="fileInput" name="file" onchange="document.getElementById('uploadForm').submit();">
+        </button>
+        
+        <form id="uploadForm" enctype="multipart/form-data" method="post" action="upload.php" accept="image/*">
+            <input type="file" id="fileInput" name="file">
+
         </form>
         <div id="uploadStatus"></div>
     </div>
-
-    <script>
-        document.getElementById('uploadForm').addEventListener('submit', function(event) {
-            document.getElementById('uploadStatus').innerHTML = 'uploading...';
-        });
-    </script>
 </body>
+<script>
+    const openModalButton = document.getElementById('openModal');
+    const closeModalButton = document.getElementsByClassName('close')[0];
+    const modal = document.getElementById('uploadModal');
+
+    openModalButton.onclick = function () {
+        modal.style.display = 'block';
+    };
+
+    closeModalButton.onclick = function () {
+        modal.style.display = 'none';
+    };
+
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    };
+</script>
 </html>

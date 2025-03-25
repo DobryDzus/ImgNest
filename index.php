@@ -24,7 +24,7 @@
 <div id="loginModal" class="modal">
     <div class="modal-content form-container">
         <span class="close">&times;</span>
-        <h2>Login</h2>
+        <h2>login</h2>
         <form action="" method="post">
             <input type="text" name="username" id="username" class="form-input" placeholder="username" required>
             <input type="password" name="pwd" id="pwd" class="form-input" placeholder="password" required>
