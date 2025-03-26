@@ -44,20 +44,28 @@
     const openModalButton = document.getElementById('openModal');
     const closeModalButton = document.getElementsByClassName('close')[0];
     const modal = document.getElementById('uploadModal');
+    const modalContent = document.querySelector('.modal-content');
     const fileInput = document.getElementById('file');
     const preview = document.getElementById('preview');
 
     openModalButton.onclick = function () {
         modal.style.display = 'block';
+        modalContent.classList.remove('hidden');
     };
 
     closeModalButton.onclick = function () {
-        modal.style.display = 'none';
+        modalContent.classList.add('hidden');
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 300); 
     };
 
     window.onclick = function (event) {
         if (event.target == modal) {
-            modal.style.display = 'none';
+            modalContent.classList.add('hidden');
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300); 
         }
     };
 
