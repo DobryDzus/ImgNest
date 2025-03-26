@@ -203,6 +203,12 @@ header {
     text-decoration: none;
 }
 
+#preview {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+}
+
 /*register*/
 
 .register-form{

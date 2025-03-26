@@ -24,18 +24,28 @@
         <button class="upload-area" id="openModal">
             click here for upload
         </button>
-        
-        <form id="uploadForm" enctype="multipart/form-data" method="post" action="upload.php" accept="image/*">
-            <input type="file" id="fileInput" name="file">
+    </div>
 
-        </form>
-        <div id="uploadStatus"></div>
+    <!-- uploadModal-->
+    <div id="uploadModal" class="modal">
+        <div class="modal-content form-container">
+            <span class="close">&times;</span>
+            <h2>Upload</h2>
+            <form action="upload.php" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" id="file" class="form-input" required>
+                <img id="preview" src="#" alt="preview" style="display: none;">
+                <input type="text" name="fileName" id="fileName" class="form-input" placeholder="File name" required>
+                <input type="submit" value="Upload" class="form-button">
+            </form>
+        </div>
     </div>
 </body>
 <script>
     const openModalButton = document.getElementById('openModal');
     const closeModalButton = document.getElementsByClassName('close')[0];
     const modal = document.getElementById('uploadModal');
+    const fileInput = document.getElementById('file');
+    const preview = document.getElementById('preview');
 
     openModalButton.onclick = function () {
         modal.style.display = 'block';
@@ -48,6 +58,18 @@
     window.onclick = function (event) {
         if (event.target == modal) {
             modal.style.display = 'none';
+        }
+    };
+
+    fileInput.onchange = function (event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
         }
     };
 </script>
