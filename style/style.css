@@ -140,6 +140,10 @@ header {
     color: #555;
 }
 
+.form-input:focus {
+    outline: none;
+}
+
 
 
 .form-button {
@@ -372,4 +376,48 @@ header {
 
 .confirmation-message p{
     font-size: 16px;
+}
+
+/*tags*/
+
+.tagsWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+
+.tagsInput{
+    border: none;
+    background: none;
+    font-family: "Lexend Deca", sans-serif;
+    font-size: 16px;
+    width: 100%;
+}
+
+.tagsInput:focus{
+    outline: none;
+}
+
+.tag {
+    background-color: #e0e0e0;
+    border-radius: 3px;
+    padding-left: 0.188rem;
+    padding-right: 0.188rem;
+    display: flex;
+    align-items: center;
+    border: 1px solid #6e6e6e;
+    margin-right: 5px; 
+}
+
+.tag .closeTag {
+    margin-left: 8px;
+    cursor: pointer;
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    display: none;
+    margin-top: 5px;
 }
