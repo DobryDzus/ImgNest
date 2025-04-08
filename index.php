@@ -33,6 +33,9 @@
         </form>
     </div>
 </div>
+<div class="main-container">
+    <h1>see what other users uploaded</h1>
+</div>
 </body>
 <script>
     const openModalButton = document.getElementById('openModal');

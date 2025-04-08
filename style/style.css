@@ -102,6 +102,12 @@ header {
     color: #6502d6;
 }
 
+.main-container{
+    color: white;
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+}
 
 /*login, signup*/
 
