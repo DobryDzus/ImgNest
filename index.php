@@ -1,3 +1,39 @@
+<?php
+session_start();
+
+require_once 'includes/dbhinc.php';
+
+$error ="";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST"){
+    $username = $_POST["username"];
+    $pwd = $_POST["pwd"];
+
+    if (empty($username) || empty($pwd)) {
+        $error = 'fill out.';
+    } else {
+        $sql = "SELECT id, username, pwd FROM users";
+        $result = mysqli_query($conn, $sql);
+
+        $found = false;
+
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                if ($row['email'] == $email && $row['pwd'] == $pwd) {
+                    $_SESSION['user_id'] = $row['id'];
+                    $_SESSION['username'] = $row['username'];
+                    header('Location: dashboard.php');
+                    exit();
+                }
+            }
+            $error = 'invalid username or password.';
+        } else {
+            $error = 'no data found.';
+        }
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,7 +61,10 @@
     <div class="modal-content form-container">
         <span class="close">&times;</span>
         <h2>login</h2>
-        <form action="" method="post">
+        <?php if (!empty($error)): ?>
+            <p style="color: red;\"><?= htmlspecialchars($error) ?></p>
+        <?php endif; ?>
+        <form method="post">
             <input type="text" name="username" id="username" class="form-input" placeholder="username" required>
             <input type="password" name="pwd" id="pwd" class="form-input" placeholder="password" required>
             <input type="submit" value="Login" class="form-button">

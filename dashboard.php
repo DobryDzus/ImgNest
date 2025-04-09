@@ -1,3 +1,15 @@
+<?php
+session_start();
+
+if (!isset($_SESSION["user_id"]) && !isset($_SESSION["username"])) {
+    header("Location: index.php");
+    exit();
+}
+
+
+$username = htmlspecialchars($_SESSION['username']);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,6 +32,11 @@
             order
         </div>
     </div>
+    <div class="loggedinas">
+            <div class="loggedinas-text">logged in as: <span class="username"><?php echo $username; ?></span></div>
+            <a href="logout.php" class="logout-button">Logout</a>
+        </div>
+    
     <div class="container">
         <button class="upload-area" id="openModal">
             click here for upload
@@ -36,7 +53,7 @@
                 <img id="preview" src="#" alt="preview" style="display: none; border-radius: 0;">
                 <input type="text" name="fileName" id="fileName" class="form-input" placeholder="File name" required>
                 <div class="form-input" id="tagsWrapper">
-                    <input type="text" name="tags" id="tags-input" class="tagsInput" placeholder="type and press enter to add a tag">
+                    <input type="text" name="tags" id="tags-input" class="tagsInput" placeholder="type and press space to add a tag">
                 </div>
                 <div id="error-message" class="error-message">You can only add up to 3 tags.</div>
                 <input type="submit" value="Upload" class="form-button">
