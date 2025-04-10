@@ -9,6 +9,7 @@ if (!isset($_SESSION["user_id"]) && !isset($_SESSION["username"])) {
 
 $username = htmlspecialchars($_SESSION['username']);
 $user_id = htmlspecialchars($_SESSION['user_id']);
+
 ?>
 
 <!DOCTYPE html>
@@ -56,7 +57,7 @@ $user_id = htmlspecialchars($_SESSION['user_id']);
         <div class="modal-content form-container">
             <span class="close">&times;</span>
             <h2>Upload</h2>
-            <form action="includes/uploadhandler.php" method="post" enctype="multipart/form-data">
+            <form action="" method="post" enctype="multipart/form-data">
                 <input type="file" name="file" id="file" class="form-input" required>
                 <img id="preview" src="#" alt="preview" style="display: none; border-radius: 0;">
                 <input type="text" name="fileName" id="fileName" class="form-input" placeholder="File name" required>
@@ -133,3 +134,39 @@ $user_id = htmlspecialchars($_SESSION['user_id']);
 });
 </script>
 </html>
+
+<?php
+
+$error = "";
+require_once 'includes/users_connect.php';
+
+$fileName = $_POST["fileName"];
+$tagsInput = $_POST["tags"];
+$file = $_FILES["file"];
+
+if (empty($fileName) || empty($tagsInput) || empty($file)) {
+    $error = "Vyplňte všechna pole.";
+} else {
+    $tagsArray = explode(" ", $tagsInput);
+    $tag1 = isset($tagsArray[0]) ? $tagsArray[0] : null;
+    $tag2 = isset($tagsArray[1]) ? $tagsArray[1] : null;
+    $tag3 = isset($tagsArray[2]) ? $tagsArray[2] : null;
+
+    $uploadDir = "../uploads/";
+    $fileExtension = pathinfo($file["name"], PATHINFO_EXTENSION);
+    $newFileDir = $uploadDir . $fileName .".". $fileExtension;
+
+    if (move_uploaded_file($file["tmp_name"], $newFileDir)){
+        $sql = "INSERT INTO gallery (imgDir, imgName, Tag1, Tag2, Tag3, users_id) VALUES ('$newFileDir', '$fileName', '$tag1', '$tag2', '$tag3', '$user_id');";
+
+        if (mysqli_query($conn, $sql)){
+            header("Location: ../dashboard.php");
+        } else {
+            echo "Chyba: " . $sql . "<br>" . mysqli_error($conn);
+        }
+    } else {
+        $error = "upload error.";
+    }}
+
+    echo $error;
+?>
