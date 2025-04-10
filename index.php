@@ -1,15 +1,13 @@
 <?php
 session_start();
 
-require_once 'includes/dbhinc.php';
-
-$error ="";
-
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
+    require_once 'includes/users_connect.php';
+    $error ="";
     $username = $_POST["username"];
     $pwd = $_POST["pwd"];
 
-    if (empty($username) || empty($pwd)) {
+    if (empty($username) or empty($pwd)) {
         $error = 'fill out.';
     } else {
         $sql = "SELECT id, username, pwd FROM users";
@@ -19,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
         if (mysqli_num_rows($result) > 0) {
             while ($row = mysqli_fetch_assoc($result)) {
-                if ($row['email'] == $email && $row['pwd'] == $pwd) {
+                if ($row['username'] == $username and $row['pwd'] == $pwd) {
                     $_SESSION['user_id'] = $row['id'];
                     $_SESSION['username'] = $row['username'];
                     header('Location: dashboard.php');

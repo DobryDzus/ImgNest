@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
 
     echo $username;
 
-    require_once 'dbhinc.php';
+    require_once 'users_connect.php';
 
     $sql = "INSERT INTO users (username, pwd, email) VALUES ('$username', '$pwd', '$email');";
 

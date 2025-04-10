@@ -8,6 +8,7 @@ if (!isset($_SESSION["user_id"]) && !isset($_SESSION["username"])) {
 
 
 $username = htmlspecialchars($_SESSION['username']);
+$user_id = htmlspecialchars($_SESSION['user_id']);
 ?>
 
 <!DOCTYPE html>
@@ -32,10 +33,17 @@ $username = htmlspecialchars($_SESSION['username']);
             order
         </div>
     </div>
-    <div class="loggedinas">
-            <div class="loggedinas-text">logged in as: <span class="username"><?php echo $username; ?></span></div>
-            <a href="logout.php" class="logout-button">Logout</a>
+    <div class="upper">
+        <div class="loggedinas-text">
+            logged in as: <span class="username"><?php echo $username . " <br>id: " . $user_id; ?></span>
         </div>
+        <div class="logout-button">
+            <a href="logout.php" class="link-nav">Logout</a>
+        </div>
+        <div>
+            <h1>see what you've uploaded</h1>
+        </div>
+    </div>
     
     <div class="container">
         <button class="upload-area" id="openModal">

@@ -10,6 +10,7 @@ $conn = mysqli_connect($server, $db_username, $password, $db);
 if (!$conn) {
     die("nefunguje pripojeni: " . mysqli_connect_error());
 } else {
-    echo "pripojeno";
+    //AKTIVOVAT JEN PRI TESTOVANI
+    //echo "pripojeno";
 }
 ?>
