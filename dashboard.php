@@ -56,7 +56,7 @@ $user_id = htmlspecialchars($_SESSION['user_id']);
         <div class="modal-content form-container">
             <span class="close">&times;</span>
             <h2>Upload</h2>
-            <form action="upload.php" method="post" enctype="multipart/form-data">
+            <form action="includes/uploadhandler.php" method="post" enctype="multipart/form-data">
                 <input type="file" name="file" id="file" class="form-input" required>
                 <img id="preview" src="#" alt="preview" style="display: none; border-radius: 0;">
                 <input type="text" name="fileName" id="fileName" class="form-input" placeholder="File name" required>
