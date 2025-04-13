@@ -144,15 +144,20 @@ $fileName = $_POST["fileName"];
 $tagsInput = $_POST["tags"];
 $file = $_FILES["file"];
 
-if (empty($fileName) || empty($tagsInput) || empty($file)) {
-    $error = "Vyplňte všechna pole.";
-} else {
+if (empty($fileName)) {
+    $error = "vypúln jmeno soubrou.";
+} elseif (empty($tagsInput)) {
+    echo "vyplnte tagy.";
+} elseif (empty($file)) {
+    echo "vyplnte soubor.";
+}
+ else {
     $tagsArray = explode(" ", $tagsInput);
     $tag1 = isset($tagsArray[0]) ? $tagsArray[0] : null;
     $tag2 = isset($tagsArray[1]) ? $tagsArray[1] : null;
     $tag3 = isset($tagsArray[2]) ? $tagsArray[2] : null;
 
-    $uploadDir = "../uploads/";
+    $uploadDir = "uploads/";
     $fileExtension = pathinfo($file["name"], PATHINFO_EXTENSION);
     $newFileDir = $uploadDir . $fileName .".". $fileExtension;
 
@@ -160,7 +165,7 @@ if (empty($fileName) || empty($tagsInput) || empty($file)) {
         $sql = "INSERT INTO gallery (imgDir, imgName, Tag1, Tag2, Tag3, users_id) VALUES ('$newFileDir', '$fileName', '$tag1', '$tag2', '$tag3', '$user_id');";
 
         if (mysqli_query($conn, $sql)){
-            header("Location: ../dashboard.php");
+            echo "UPLOADED SUCCESSFULLY!";
         } else {
             echo "Chyba: " . $sql . "<br>" . mysqli_error($conn);
         }
