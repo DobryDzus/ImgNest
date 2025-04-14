@@ -1,7 +1,7 @@
 <?php
 setcookie(session_name(), '', 100);
 session_unset();
-$_SESSION = array();
+$_SESSION = [];
 
 ?>
 

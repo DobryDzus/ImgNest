@@ -61,8 +61,10 @@ $user_id = htmlspecialchars($_SESSION['user_id']);
                 <input type="file" name="file" id="file" class="form-input" required>
                 <img id="preview" src="#" alt="preview" style="display: none; border-radius: 0;">
                 <input type="text" name="fileName" id="fileName" class="form-input" placeholder="File name" required>
-                <div class="form-input" id="tagsWrapper">
-                    <input type="text" name="tags" id="tags-input" class="tagsInput" placeholder="type and press space to add a tag">
+                <div class="tags-input-wrapper" id="tagsWrapper">
+                    <input type="text" name="tag1" class="tag" placeholder="Tag 1">
+                    <input type="text" name="tag2" class="tag" placeholder="Tag 2">
+                    <input type="text" name="tag3" class="tag" placeholder="Tag 3">
                 </div>
                 <div id="error-message" class="error-message">You can only add up to 3 tags.</div>
                 <input type="submit" value="Upload" class="form-button">
@@ -77,9 +79,6 @@ $user_id = htmlspecialchars($_SESSION['user_id']);
     const modalContent = document.querySelector('.modal-content');
     const fileInput = document.getElementById('file');
     const preview = document.getElementById('preview');
-    const tagsInputWrapper = document.getElementById('tagsWrapper');
-    const tagsInput = document.getElementById('tags-input');
-    const errorMessage = document.getElementById('error-message');
 
     openModalButton.onclick = function () {
         modal.style.display = 'block';
@@ -114,24 +113,6 @@ $user_id = htmlspecialchars($_SESSION['user_id']);
         }
     };
 
-    tagsInput.addEventListener('keypress', function (e) {
-    if (e.key === ' ' && tagsInput.value.trim() !== '' && tagsInputWrapper.getElementsByClassName('tag').length < 3) {
-        e.preventDefault();
-        const tagText = tagsInput.value.trim();
-        const tag = document.createElement('span');
-        tag.classList.add('tag');
-        tag.innerHTML = tagText + '<span class="closeTag">&times;</span>';
-        tagsInputWrapper.insertBefore(tag, tagsInput);
-        tagsInput.value = '';
-
-        tag.querySelector('.closeTag').addEventListener('click', function () {
-            tagsInputWrapper.removeChild(tag);
-            errorMessage.style.display = 'none';
-        });
-    } else if (tagsInputWrapper.getElementsByClassName('tag').length >= 3) {
-        errorMessage.style.display = 'block';
-    }
-});
 </script>
 </html>
 
@@ -141,21 +122,20 @@ $error = "";
 require_once 'includes/users_connect.php';
 
 $fileName = $_POST["fileName"];
-$tagsInput = $_POST["tags"];
 $file = $_FILES["file"];
+$tag1 = $_POST["tag1"];
+$tag2 = $_POST["tag2"];
+$tag3 = $_POST["tag3"];
+
 
 if (empty($fileName)) {
-    $error = "vypúln jmeno soubrou.";
-} elseif (empty($tagsInput)) {
-    echo "vyplnte tagy.";
+    $error = "choose a file name.";
 } elseif (empty($file)) {
-    echo "vyplnte soubor.";
+    $error = "choose a file.";
 }
  else {
-    $tagsArray = explode(" ", $tagsInput);
-    $tag1 = isset($tagsArray[0]) ? $tagsArray[0] : null;
-    $tag2 = isset($tagsArray[1]) ? $tagsArray[1] : null;
-    $tag3 = isset($tagsArray[2]) ? $tagsArray[2] : null;
+
+    
 
     $uploadDir = "uploads/";
     $fileExtension = pathinfo($file["name"], PATHINFO_EXTENSION);
@@ -173,5 +153,5 @@ if (empty($fileName)) {
         $error = "upload error.";
     }}
 
-    echo $error;
+
 ?>

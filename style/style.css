@@ -394,11 +394,10 @@ header {
 
 /*tags*/
 
-.tagsWrapper {
+.tags-input-wrapper {
     display: flex;
-    flex-wrap: wrap;
-    border: 1px solid #ccc;
-    padding: 5px;
+    width: 100%;
+    justify-content: space-between;
 }
 
 .tagsInput{
@@ -406,32 +405,29 @@ header {
     background: none;
     font-family: "Lexend Deca", sans-serif;
     font-size: 16px;
-    width: 100%;
 }
 
-.tagsInput:focus{
+.tags-input-wrapper:focus{
     outline: none;
 }
 
 .tag {
-    background-color: #e0e0e0;
-    border-radius: 3px;
-    padding-left: 0.188rem;
-    padding-right: 0.188rem;
+    font-family: "Lexend Deca", sans-serif;
+    width: 22%;
+    padding: 0.75rem 0.938rem;
+    margin: 10px 0;
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+    background-color: #ddd;
+    color: black;
+    text-align: center;
     display: flex;
     align-items: center;
-    border: 1px solid #6e6e6e;
-    margin-right: 5px; 
-}
-
-.tag .closeTag {
-    margin-left: 8px;
-    cursor: pointer;
 }
 
 .error-message {
-    color: red;
+    color: #ccc;
     font-size: 14px;
-    display: none;
     margin-top: 5px;
 }
