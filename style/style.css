@@ -102,6 +102,12 @@ header {
     color: #6502d6;
 }
 
+.nadpis{
+    color: white;
+    display: flex;
+    justify-content: center;
+}
+
 .main-container{
     color: white;
     display: flex;

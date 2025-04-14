@@ -1,5 +1,13 @@
 <?php
 session_start();
+require 'includes/users_connect.php';
+
+$obrazky = "SELECT imgDir, imgName FROM gallery";
+$obrazkyV = mysqli_query($conn, $obrazky);
+
+if (!$obrazkyV) {
+    die("chyba: " . mysqli_error($conn));
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
     require_once 'includes/users_connect.php';
@@ -70,9 +78,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         </form>
     </div>
 </div>
+<h1 class="nadpis">see what other users uploaded</h1>
 <div class="main-container">
-    <h1>see what other users uploaded</h1>
+    <div class="gallery">
+            <?php
+            if (mysqli_num_rows($obrazkyV) > 0) {
+                while ($row = mysqli_fetch_assoc($obrazkyV)) {
+                    echo '<div class="image-container">';
+                    echo '<img src="' . htmlspecialchars($row["imgDir"]) . '" alt="' . htmlspecialchars($row["imgName"]) . '">';
+                    echo '<p>' . htmlspecialchars($row["imgName"]) . '</p>';
+                    echo '</div>';
+                }
+            } else {
+                echo '<p>no images uploaded yet.</p>';
+            }
+            ?>
+    </div>
 </div>
+
+
 </body>
 <script>
     const openModalButton = document.getElementById('openModal');

@@ -117,7 +117,7 @@ $user_id = htmlspecialchars($_SESSION['user_id']);
 </html>
 
 <?php
-
+if ($_SERVER['REQUEST_METHOD'] == "POST"){
 $error = "";
 require_once 'includes/users_connect.php';
 
@@ -135,7 +135,7 @@ if (empty($fileName)) {
 }
  else {
 
-    
+
 
     $uploadDir = "uploads/";
     $fileExtension = pathinfo($file["name"], PATHINFO_EXTENSION);
@@ -153,5 +153,5 @@ if (empty($fileName)) {
         $error = "upload error.";
     }}
 
-
+}
 ?>
