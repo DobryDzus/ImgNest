@@ -115,6 +115,36 @@ header {
     height: 100vh;
 }
 
+/*galerie*/
+
+.gallery{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 20px; 
+    padding: 50px 100px;
+    justify-items: center;
+}
+
+.image-container{
+    background-color: white;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.image-container img{
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+.image-container p{
+    margin: 10px 0;
+    padding: 5px;
+    font-size: 16px;
+    color: #555;
+    background-color: white;
+}
+
 /*login, signup*/
 
 .form-container {
