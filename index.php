@@ -48,6 +48,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     <title>imgnest</title>
     <script src="https://kit.fontawesome.com/9139c1e78a.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/bricklayer/dist/bricklayer.css">
+    <script src="https://unpkg.com/bricklayer/dist/bricklayer.js"></script>
 </head>
 <body>
     <!-- Header -->
@@ -80,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 </div>
 <h1 class="nadpis">see what other users uploaded</h1>
 <div class="main-container">
-    <div class="gallery">
+    <div class="bricklayer">
             <?php
             if (mysqli_num_rows($obrazkyV) > 0) {
                 while ($row = mysqli_fetch_assoc($obrazkyV)) {
@@ -99,6 +101,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
 </body>
 <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        new Bricklayer(document.querySelector('.bricklayer'));
+    });
     const openModalButton = document.getElementById('openModal');
     const closeModalButton = document.getElementsByClassName('close')[0];
     const modal = document.getElementById('loginModal');
