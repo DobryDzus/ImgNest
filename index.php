@@ -49,7 +49,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     <script src="https://kit.fontawesome.com/9139c1e78a.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style/style.css">
     <link rel="stylesheet" href="https://unpkg.com/bricklayer/dist/bricklayer.css">
-    <script src="https://unpkg.com/bricklayer/dist/bricklayer.js"></script>
+    <script src="https://unpkg.com/bricklayer/dist/bricklayer.js"></script> <!-- https://github.com/ademilter/bricklayer | dela layout galerie -->
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@19.1.3/dist/lazyload.min.js"></script> <!-- https://github.com/verlok/vanilla-lazyload | lazyload -->
+
 </head>
 <body>
     <!-- Header -->
@@ -87,7 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             if (mysqli_num_rows($obrazkyV) > 0) {
                 while ($row = mysqli_fetch_assoc($obrazkyV)) {
                     echo '<div class="image-container">';
-                    echo '<img src="' . htmlspecialchars($row["imgDir"]) . '" alt="' . htmlspecialchars($row["imgName"]) . '">';
+                    echo '<img class="lazy" src="' . htmlspecialchars($row["imgDir"]) . '" alt="' . htmlspecialchars($row["imgName"]) . '">'; // tady pred src jeste patri data-src, ale nefunguje s tim layout
                     echo '<p>' . htmlspecialchars($row["imgName"]) . '</p>';
                     echo '</div>';
                 }
@@ -101,9 +103,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
 </body>
 <script>
+    const lazyLoadInstance = new LazyLoad({
+        elements_selector: ".lazy"
+    }); // nacteni lazy loadingu //
     document.addEventListener('DOMContentLoaded', function () {
         new Bricklayer(document.querySelector('.bricklayer'));
-    });
+    }); // nastaveni layoutu //
     const openModalButton = document.getElementById('openModal');
     const closeModalButton = document.getElementsByClassName('close')[0];
     const modal = document.getElementById('loginModal');
