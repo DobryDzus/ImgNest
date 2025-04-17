@@ -86,6 +86,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         </form>
     </div>
 </div>
+<div class="srch-fltr">
+        <form class="search-bar">
+            <input type="text" class="search-input" placeholder="Search..." name="search">
+            <button type="submit" class="search-button"><i class="fa fa-search"></i></button>
+        </form>
+        <div class="filter-bar">
+            filter
+        </div>
+    </div>
 <h1 class="nadpis">see what other users uploaded</h1>
 <div class="main-container">
     <div class="bricklayer">
@@ -94,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                 while ($row = mysqli_fetch_assoc($obrazkyV)) {
                     echo '<div class="image-container">';
                     echo '<a class="venobox" data-gall="gallery" data-title="' . htmlspecialchars($row["imgName"]) . ' @ ' . htmlspecialchars($row["username"]) . '" href="' . htmlspecialchars($row["imgDir"]) . '">';
-                    echo '<img class="lazy" data-src="' . htmlspecialchars($row["imgDir"]) . '" alt="' . htmlspecialchars($row["imgName"]) . '">'; // tady pred src jeste patri data-src, ale nefunguje s tim layout
+                    echo '<img class="lazy" data-src="' . htmlspecialchars($row["imgDir"]) . '" alt="' . htmlspecialchars($row["imgName"]) . '">';
                     echo '<p>' . htmlspecialchars($row["imgName"]) . '</p>';
                     echo '</div>';
                 }

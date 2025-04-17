@@ -22,18 +22,6 @@ $user_id = htmlspecialchars($_SESSION['user_id']);
     <script src="https://kit.fontawesome.com/9139c1e78a.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="srch-fltr-ordr">
-        <form class="search-bar">
-            <input type="text" class="search-input" placeholder="Search..." name="search">
-            <button type="submit" class="search-button"><i class="fa fa-search"></i></button>
-        </form>
-        <div class="filter-bar">
-            filter
-        </div>
-        <div class="order-bar">
-            order
-        </div>
-    </div>
     <div class="upper">
         <div class="loggedinas-text">
             logged in as: <span class="username"><?php echo $username . " <br>id: " . $user_id; ?></span>
@@ -41,10 +29,9 @@ $user_id = htmlspecialchars($_SESSION['user_id']);
         <div class="logout-button">
             <a href="logout.php" class="link-nav">Logout</a>
         </div>
-        <div>
-            <h1>see what you've uploaded</h1>
-        </div>
     </div>
+
+        <h1 class="tittle">see what you've uploaded</h1>
     
     <div class="container">
         <button class="upload-area" id="openModal">
