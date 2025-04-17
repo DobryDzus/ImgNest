@@ -2,7 +2,7 @@
 session_start();
 require 'includes/users_connect.php';
 
-$obrazky = "SELECT imgDir, imgName, users_id FROM gallery";
+$obrazky = "SELECT gallery.imgDir, gallery.imgName, users.username FROM gallery JOIN users ON gallery.users_id = users.id";
 $obrazkyV = mysqli_query($conn, $obrazky);
 
 if (!$obrazkyV) {
@@ -93,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             if (mysqli_num_rows($obrazkyV) > 0) {
                 while ($row = mysqli_fetch_assoc($obrazkyV)) {
                     echo '<div class="image-container">';
-                    echo '<a class="venobox" data-gall="gallery" data-title="' . htmlspecialchars($row["imgName"]) . ' @ '.' " href="' . htmlspecialchars($row["imgDir"]) . '">';
+                    echo '<a class="venobox" data-gall="gallery" data-title="' . htmlspecialchars($row["imgName"]) . ' @ ' . htmlspecialchars($row["username"]) . '" href="' . htmlspecialchars($row["imgDir"]) . '">';
                     echo '<img class="lazy" data-src="' . htmlspecialchars($row["imgDir"]) . '" alt="' . htmlspecialchars($row["imgName"]) . '">'; // tady pred src jeste patri data-src, ale nefunguje s tim layout
                     echo '<p>' . htmlspecialchars($row["imgName"]) . '</p>';
                     echo '</div>';
