@@ -138,6 +138,10 @@ img.lazy{
     margin-bottom: 10px;
 }
 
+.venobox{
+    text-decoration: none;
+}
+
 /*login, signup*/
 
 .form-container {

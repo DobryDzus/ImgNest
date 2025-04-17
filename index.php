@@ -2,7 +2,7 @@
 session_start();
 require 'includes/users_connect.php';
 
-$obrazky = "SELECT imgDir, imgName FROM gallery";
+$obrazky = "SELECT imgDir, imgName, users_id FROM gallery";
 $obrazkyV = mysqli_query($conn, $obrazky);
 
 if (!$obrazkyV) {
@@ -51,6 +51,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     <link rel="stylesheet" href="https://unpkg.com/bricklayer/dist/bricklayer.css">
     <script src="https://unpkg.com/bricklayer/dist/bricklayer.js"></script> <!-- https://github.com/ademilter/bricklayer | dela layout galerie -->
     <script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@19.1.3/dist/lazyload.min.js"></script> <!-- https://github.com/verlok/vanilla-lazyload | lazyload -->
+    <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script> <!--snad fix problemu layoutu a lazyloadu-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/venobox/2.0.9/venobox.min.css" /> <!-- https://github.com/nicolafranchini/VenoBox | venobox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/venobox/2.0.9/venobox.min.js"></script> <!-- https://github.com/nicolafranchini/VenoBox | venobox -->
+
 
 </head>
 <body>
@@ -89,7 +93,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             if (mysqli_num_rows($obrazkyV) > 0) {
                 while ($row = mysqli_fetch_assoc($obrazkyV)) {
                     echo '<div class="image-container">';
-                    echo '<img class="lazy" src="' . htmlspecialchars($row["imgDir"]) . '" alt="' . htmlspecialchars($row["imgName"]) . '">'; // tady pred src jeste patri data-src, ale nefunguje s tim layout
+                    echo '<a class="venobox" data-gall="gallery" data-title="' . htmlspecialchars($row["imgName"]) . ' @ '.' " href="' . htmlspecialchars($row["imgDir"]) . '">';
+                    echo '<img class="lazy" data-src="' . htmlspecialchars($row["imgDir"]) . '" alt="' . htmlspecialchars($row["imgName"]) . '">'; // tady pred src jeste patri data-src, ale nefunguje s tim layout
                     echo '<p>' . htmlspecialchars($row["imgName"]) . '</p>';
                     echo '</div>';
                 }
@@ -103,28 +108,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
 </body>
 <script>
-    const lazyLoadInstance = new LazyLoad({
-        elements_selector: ".lazy"
-    }); // nacteni lazy loadingu //
     document.addEventListener('DOMContentLoaded', function () {
         new Bricklayer(document.querySelector('.bricklayer'));
     }); // nastaveni layoutu //
+    document.addEventListener('DOMContentLoaded', function () {
+        new VenoBox({
+            selector: '.venobox',
+            fitView: true,
+            navigation: false,
+            titleattr: 'data-title',
+            titlePosition: 'top',
+            titleStyle: 'bar',
+        });
+    }); //venobox nastaveni //
     const openModalButton = document.getElementById('openModal');
     const closeModalButton = document.getElementsByClassName('close')[0];
     const modal = document.getElementById('loginModal');
+    const lazyLoadInstance = new LazyLoad({
+        elements_selector: ".lazy"
+    }); // nacteni lazy loadingu //
 
-    openModalButton.onclick = function () {
-        modal.style.display = 'block';
-    };
+    openModalButton.onclick = function () { 
+        fetch('check_login.php')
+            .then(response => response.json())
+            .then(data => {
+                if (data.logged_in) {
+                    window.location.href = 'dashboard.php';
+                } else {
+                    modal.style.display = 'block';
+                }
+            })
+            .catch(error => console.error('error:', error));
+    } // kontrola prihlaseni //
 
     closeModalButton.onclick = function () {
         modal.style.display = 'none';
-    };
+    }; // vypnuti modal //
 
     window.onclick = function (event) {
         if (event.target == modal) {
             modal.style.display = 'none';
         }
-    };
+    }; // zavreni modal pri kliku mimo nej //
 </script>
 </html>
