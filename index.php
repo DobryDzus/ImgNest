@@ -127,7 +127,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             navigation: false,
             titleattr: 'data-title',
             titlePosition: 'top',
-            titleStyle: 'bar',
+            titleStyle: 'transparent',
+            navTouch: false,
+            navKeyboard: false,
         });
     }); //venobox nastaveni //
     const openModalButton = document.getElementById('openModal');

@@ -6,9 +6,24 @@ if (!isset($_SESSION["user_id"]) && !isset($_SESSION["username"])) {
     exit();
 }
 
+require 'includes/users_connect.php';
 
 $username = htmlspecialchars($_SESSION['username']);
 $user_id = htmlspecialchars($_SESSION['user_id']);
+
+$query = "SELECT imgDir, imgName FROM gallery WHERE users_id = '$user_id'";
+$result = mysqli_query($conn, $query);
+
+if (!$result) {
+    die("chyba: ". mysqli_error($conn));
+}
+
+$images = [];
+while ($row = mysqli_fetch_assoc($result)) {
+    $images[] = $row;
+}
+
+mysqli_free_result($result); // pro lepsi stabilitu
 
 ?>
 
@@ -20,6 +35,12 @@ $user_id = htmlspecialchars($_SESSION['user_id']);
     <title>upload | imgnest</title>
     <link rel="stylesheet" href="style/style.css">
     <script src="https://kit.fontawesome.com/9139c1e78a.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://unpkg.com/bricklayer/dist/bricklayer.css">
+    <script src="https://unpkg.com/bricklayer/dist/bricklayer.js"></script> <!-- https://github.com/ademilter/bricklayer | dela layout galerie -->
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@19.1.3/dist/lazyload.min.js"></script> <!-- https://github.com/verlok/vanilla-lazyload | lazyload -->
+    <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script> <!--snad fix problemu layoutu a lazyloadu-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/venobox/2.0.9/venobox.min.css" /> <!-- https://github.com/nicolafranchini/VenoBox | venobox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/venobox/2.0.9/venobox.min.js"></script> <!-- https://github.com/nicolafranchini/VenoBox | venobox -->
 </head>
 <body>
     <div class="upper">
@@ -31,12 +52,27 @@ $user_id = htmlspecialchars($_SESSION['user_id']);
         </div>
     </div>
 
-        <h1 class="tittle">see what you've uploaded</h1>
-    
-    <div class="container">
-        <button class="upload-area" id="openModal">
-            click here for upload
-        </button>
+    <h1 class="nadpis">see what you've uploaded</h1>
+    <div class="main-container">
+        <div class="bricklayer">
+            <div class="image-container upload-area" id="openModal" onclick="document.getElementById('upload-form').style.display = 'block';">
+                click here for upload
+            </div>
+
+            <?php
+            if (count($images) > 0) {
+                foreach ($images as $image) {
+                    echo '<div class="image-container">';
+                    echo '<a class="venobox" data-gall="gallery" data-title="' . htmlspecialchars($image["imgName"]) . ' @ ' . $username . '" href="' . htmlspecialchars($image["imgDir"]) . '">';
+                    echo '<img class="lazy" data-src="' . htmlspecialchars($image["imgDir"]) . '" alt="' . htmlspecialchars($image["imgName"]) . '">';
+                    echo '<p>' . htmlspecialchars($image["imgName"]) . '</p>';
+                    echo '</div>';
+                }
+            } else {
+                echo "<p>no images uploaded yet</p>";
+            }
+            ?>
+        </div>
     </div>
 
     <!-- uploadModal-->
@@ -60,12 +96,30 @@ $user_id = htmlspecialchars($_SESSION['user_id']);
     </div>
 </body>
 <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        new Bricklayer(document.querySelector('.bricklayer'));
+    }); // nastaveni layoutu //
+    document.addEventListener('DOMContentLoaded', function () {
+        new VenoBox({
+            selector: '.venobox',
+            fitView: true,
+            navigation: false,
+            titleattr: 'data-title',
+            titlePosition: 'top',
+            titleStyle: 'transparent',
+            navTouch: false,
+            navKeyboard: false,
+        });
+    }); //venobox nastaveni //
     const openModalButton = document.getElementById('openModal');
     const closeModalButton = document.getElementsByClassName('close')[0];
     const modal = document.getElementById('uploadModal');
     const modalContent = document.querySelector('.modal-content');
     const fileInput = document.getElementById('file');
     const preview = document.getElementById('preview');
+    const lazyLoadInstance = new LazyLoad({
+        elements_selector: ".lazy"
+    }); // nacteni lazy loadingu //
 
     openModalButton.onclick = function () {
         modal.style.display = 'block';

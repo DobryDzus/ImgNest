@@ -15,7 +15,7 @@ $_SESSION = [];
     <script>
         setTimeout(() => {
             window.location.href = "index.php";
-        }, 5000); // Přesměrování po 5 sekundách
+        }, 5000); // presmeruje po 5 sekundach
     </script>
 </head>
 <body>
