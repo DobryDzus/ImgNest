@@ -2,7 +2,27 @@
 session_start();
 require 'includes/users_connect.php';
 
-$obrazky = "SELECT gallery.imgDir, gallery.imgName, users.username FROM gallery JOIN users ON gallery.users_id = users.id";
+$obrazky = "SELECT gallery.imgDir, gallery.imgName, users.username FROM gallery JOIN users ON gallery.users_id = users.id"; // ziskani cesty, nazvu a username pomoci JOIN mezi tabulkami gallery a users
+
+$tag1 = isset($_GET['tag1']) ? $_GET['tag1'] : '';
+$tag2 = isset($_GET['tag2']) ? $_GET['tag2'] : '';
+$tag3 = isset($_GET['tag3']) ? $_GET['tag3'] : '';
+
+$conditions = [];
+if (!empty($tag1)) { // kontrola tagu 1
+    $conditions[] = "gallery.tag1 = '" . mysqli_real_escape_string($conn, $tag1) . "'";
+}
+if (!empty($tag2)) { // kontrola tagu 2
+    $conditions[] = "gallery.tag2 = '" . mysqli_real_escape_string($conn, $tag2) . "'";
+}
+if (!empty($tag3)) { // kontrola tagu 3
+    $conditions[] = "gallery.tag3 = '" . mysqli_real_escape_string($conn, $tag3) . "'";
+}
+
+if (count($conditions) > 0) {
+    $obrazky .= " WHERE " . implode(" AND ", $conditions); 
+}
+
 $obrazkyV = mysqli_query($conn, $obrazky);
 
 if (!$obrazkyV) {
@@ -20,8 +40,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     } else {
         $sql = "SELECT id, username, pwd FROM users";
         $result = mysqli_query($conn, $sql);
-
-        $found = false;
 
         if (mysqli_num_rows($result) > 0) {
             while ($row = mysqli_fetch_assoc($result)) {
@@ -87,13 +105,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     </div>
 </div>
 <div class="srch-fltr">
-        <form class="search-bar">
-            <input type="text" class="search-input" placeholder="Search..." name="search">
+        <form class="search-bar" method="get">
+            <input type="text" name="tag1" class="search-input" placeholder="filter by tag 1" value="<?= htmlspecialchars($tag1) ?>">
+            <input type="text" name="tag2" class="search-input" placeholder="filter by tag 2" value="<?= htmlspecialchars($tag2) ?>">
+            <input type="text" name="tag3" class="search-input" placeholder="filter by tag 3" value="<?= htmlspecialchars($tag3) ?>">
             <button type="submit" class="search-button"><i class="fa fa-search"></i></button>
         </form>
-        <div class="filter-bar">
-            filter
-        </div>
     </div>
 <h1 class="nadpis">see what other users uploaded</h1>
 <div class="main-container">
