@@ -5,11 +5,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
     $pwd = $_POST['pwd'];
     $email = $_POST['email'];
 
-    echo $username;
+    $hashed = password_hash($pwd, PASSWORD_BCRYPT);
 
     require_once 'users_connect.php';
 
-    $sql = "INSERT INTO users (username, pwd, email) VALUES ('$username', '$pwd', '$email');";
+    $sql = "INSERT INTO users (username, pwd, email) VALUES ('$username', '$hashed', '$email');";
 
     if (mysqli_query($conn, $sql)){
         header("Location: ../confirmation.php");

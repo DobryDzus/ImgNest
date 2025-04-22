@@ -29,7 +29,7 @@ if (!$obrazkyV) {
     die("chyba: " . mysqli_error($conn));
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST"){
+if ($_SERVER["REQUEST_METHOD"] == "POST"){ // login
     require_once 'includes/users_connect.php';
     $error ="";
     $username = $_POST["username"];
@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
         if (mysqli_num_rows($result) > 0) {
             while ($row = mysqli_fetch_assoc($result)) {
-                if ($row['username'] == $username and $row['pwd'] == $pwd) {
+                if ($row['username'] == $username and (password_verify($pwd, $row['pwd']))) {
                     $_SESSION['user_id'] = $row['id'];
                     $_SESSION['username'] = $row['username'];
                     header('Location: dashboard.php');
