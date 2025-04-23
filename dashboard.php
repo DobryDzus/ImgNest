@@ -66,7 +66,7 @@ mysqli_free_result($result); // pro lepsi stabilitu
                     echo '<a class="venobox" data-gall="gallery" data-title="' . htmlspecialchars($image["imgName"]) . ' @ ' . $username . '" href="' . htmlspecialchars($image["imgDir"]) . '">';
                     echo '<img class="lazy" data-src="' . htmlspecialchars($image["imgDir"]) . '" alt="' . htmlspecialchars($image["imgName"]) . '">';
                     echo '<p>' . htmlspecialchars($image["imgName"]) . '</p>';
-                    echo '</div>';
+                    echo '</a></div>';
                 }
             } else {
                 echo "<p>no images uploaded yet</p>";
@@ -133,14 +133,14 @@ mysqli_free_result($result); // pro lepsi stabilitu
         }, 300); 
     };
 
-    window.onclick = function (event) {
-        if (event.target == modal) {
-            modalContent.classList.add('hidden');
-            setTimeout(() => {
-                modal.style.display = 'none';
-            }, 300); 
-        }
-    };
+    window.addEventListener("click", function (event) {
+    if (event.target === modal) {
+        modalContent.classList.add("hidden");
+        setTimeout(() => {
+            modal.style.display = "none";
+        }, 300);
+    }
+});
 
     fileInput.onchange = function (event) {
         const file = event.target.files[0];
